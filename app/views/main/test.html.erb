@@ -1,0 +1,45 @@
+<style>
+    .flex{
+        display: flex;
+    }
+
+    .flex-col{
+        flex-direction: column;
+    }
+
+    .flex-row{
+        flex-direction: row;
+    }
+
+    .mt-5{
+        margin-top: 1rem;
+    }
+
+    .justify-center{
+        justify-content: center;
+    }
+
+    label{
+        margin-left: 1rem;
+        margin-right: 0.5rem;
+    }
+</style>
+<%= form_with url: "test", method: :post , data: {turbo: false} do |form| %>
+    <%= form.hidden_field :isRoot, value: false %>
+    <%= form.hidden_field :num, value: @n %>
+    <div class = "flex flex-col mt-5">
+        <div class = "flex justify-center mt-5">Your Grade</div>
+        <% (1..@n).each do |i| %>
+            <div class = "flex mt-5 justify-center">
+                <%= form.label :query, "Subject#{i} :"%>
+                <%= form.text_field :"sub#{i}" %>
+                <%= form.label :query, "score#{i} :"%>
+                <%= form.text_field :"scr#{i}" %>
+                <% if @root == 'false' and !@check[i-1] %>
+                    <div>please fill this row</div>
+                <% end %>
+            </div>       
+        <% end %>
+        <div class = "flex justify-center mt-5"><%= form.submit "Submit" %></div>
+    </div>
+<% end %>
